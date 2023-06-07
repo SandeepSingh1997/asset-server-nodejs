@@ -7,19 +7,31 @@ const {
 
 userApp.put("/:userId/profile-picture", (req, res) => {
   const userId = req.params.userId;
-  //   console.log(req.body);
   const base64profilePicture = req.body.profilePicture;
   const type = req.body.type;
-  //   console.log("--->", base64profilePicture);
-  saveUserProfilePicture(base64profilePicture, type, userId);
-  res.status(200).send();
+  if (!base64profilePicture || !type) {
+    return res.status(400).send();
+  }
+  try {
+    saveUserProfilePicture(base64profilePicture, type, userId);
+    res.status(200).send("profile picture saved");
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send();
+  }
 });
 
 userApp.get("/:userId/profile-picture", (req, res) => {
   const userId = req.params.userId;
-  const profilePicture = fetchUserProfilePicture(userId);
-  // console.log("hello");
-  res.status(200).json(JSON.stringify({ profilePicture: profilePicture }));
+  try {
+    const profilePicture = fetchUserProfilePicture(userId);
+    return res
+      .status(200)
+      .json(JSON.stringify({ profilePicture: profilePicture }));
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send();
+  }
 });
 
 exports.User = userApp;
