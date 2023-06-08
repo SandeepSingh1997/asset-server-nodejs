@@ -25,9 +25,7 @@ userApp.get("/:userId/profile-picture", (req, res) => {
   const userId = req.params.userId;
   try {
     const profilePicture = fetchUserProfilePicture(userId);
-    return res
-      .status(200)
-      .json(JSON.stringify({ profilePicture: profilePicture }));
+    return res.status(200).json(JSON.stringify(profilePicture));
   } catch (error) {
     console.log(error);
     return res.status(500).send();

@@ -11,6 +11,6 @@ app.use(express.json({ limit: "5mb" }));
 
 app.use("/user", User);
 
-app.listen(8080, () => {
+app.listen(8082, () => {
   console.log("app running...");
 });

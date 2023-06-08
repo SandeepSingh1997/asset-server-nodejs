@@ -14,10 +14,18 @@ function fetchUserProfilePicture(userId) {
     const pictureString = fs
       .readdirSync(`./assets/user_pictures`)
       .filter((file) => {
+        console.log(file, userId);
         return file.match(`${userId}.`) !== null;
       })[0];
+    // console.log(pictureString);
 
-    return fs.readFileSync(`./assets/user_pictures/${pictureString}`, "base64");
+    return {
+      profilePicture: fs.readFileSync(
+        `./assets/user_pictures/${pictureString}`,
+        "base64"
+      ),
+      type: pictureString.split(".")[1],
+    };
   } catch (error) {
     throw error;
   }
